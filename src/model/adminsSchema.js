@@ -22,10 +22,6 @@ const AdminsSchema = new Schema({
     tipoLogin: {
         type: String,
         required: true
-    },
-    token: {
-        type: String,
-        required: true
     }
 
 })

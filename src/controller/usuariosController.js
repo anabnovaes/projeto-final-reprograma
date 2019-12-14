@@ -14,33 +14,11 @@ const salvarUsuario = (usuario, response) => {
     return response.status(201).json(usuario)
   })
 }
+
 const criptografarSenha = (dadosUsuario) => {
   const senhaCriptografada = bcrypt.hashSync(dadosUsuario.senha)
   dadosUsuario.senha = senhaCriptografada;
   return dadosUsuario
-}
-const gerarTokenAdmin = (dadosUsuario) => {
-  const token = jwt.sign(
-    {
-      nivel: dadosUsuario.tipoLogin
-    },
-    SEGREDO
-  )
-  dadosUsuario.token = bcrypt.hashSync(token)
-  return dadosUsuario
-
-}
- 
-const gerarTokenUsuario = (dadosUsuario) => {
-  const token = jwt.sign(
-    {
-      login: dadosUsuario.login
-    },
-    SEGREDO
-  )
-  dadosUsuario.token = bcrypt.hashSync(token)
-  return dadosUsuario.token
-
 }
 
 
@@ -48,8 +26,8 @@ const gerarTokenUsuario = (dadosUsuario) => {
 //rotas para criação
 const addUsuario = async (request, response) => {
   const dadosRequisicao = request.body
+  dadosRequisicao.tipoLogin = "Usuario"
   criptografarSenha(dadosRequisicao)
-  dadosRequisicao.token = gerarTokenUsuario(dadosRequisicao)
   const novoMorador = new moradoresModel(dadosRequisicao);
   salvarUsuario(novoMorador, response)
 }
@@ -57,7 +35,6 @@ const addUsuario = async (request, response) => {
 const addAdmin = (request, response) => {
   const dadosRequisicao = request.body
   dadosRequisicao.tipoLogin = "Admin"
-  gerarTokenAdmin(dadosRequisicao)
   criptografarSenha(dadosRequisicao)
   const novoAdmin = new adminsModel(dadosRequisicao);
   salvarUsuario(novoAdmin, response)
@@ -67,13 +44,12 @@ const addAdmin = (request, response) => {
 const addVigilante = (request, response) => {
   const dadosRequisicao = request.body
   dadosRequisicao.tipoLogin = "Vigilante"
-  gerarTokenAdmin(dadosRequisicao)
   criptografarSenha(dadosRequisicao)
   const novoVigilante = new adminsModel(dadosRequisicao);
   salvarUsuario(novoVigilante, response)
 }
 
-const getProprietarios = (request, response) => {
+const getMoradores = (request, response) => {
   moradoresModel.find((error, proprietarios) => {
     if (error) {
       return response.status(500).send(error)
@@ -135,14 +111,92 @@ const getVigilanteById = (request, response) => {
     return response.status(404).send('Vigilante não encontrado.')
   })
 }
+
+const deleteMorador = (request, response) => {
+  const id = request.params.id
+
+  moradoresModel.findByIdAndDelete(id, (error, morador) => {
+    if (error) {
+      return response.status(500).send(error)
+    }
+
+    if (morador) {
+      return response.status(200).send(`O morador do ${id} foi excluido com sucesso!`)
+    }
+
+    return response.status(404).send('Morador não encontrado.')
+  })
+}
+
+const deleteVigilante = (request, response) => {
+  const id = request.params.id
+
+  adminsModel.findByIdAndDelete(id, (error, vigilante) => {
+    if (error) {
+      return response.status(500).send(error)
+    }
+
+    if (vigilante) {
+      return response.status(200).send(`O vigilante do ${id} foi excluido com sucesso!`)
+    }
+
+    return response.status(404).send('Vigilante não encontrado.')
+  })
+}
+
+const deleteAdmin = (request, response) => {
+  const id = request.params.id
+
+  adminsModel.findByIdAndDelete(id, (error, admin) => {
+    if (error) {
+      return response.status(500).send(error)
+    }
+
+    if (admin) {
+      return response.status(200).send(`O admin do ${id} foi excluido com sucesso!`)
+    }
+
+    return response.status(404).send('Admin não encontrado.')
+  })
+}
+
+const login = async (request, response) => {
+  const adminEncontrado = await adminsModel.findOne({ email: request.body.email })
+
+  if (adminEncontrado) {
+    const senhaCorreta = bcrypt.compareSync(request.body.senha, adminEncontrado.senha)
+
+    if (senhaCorreta) {
+      const token = jwt.sign(
+        {
+          grupo: adminEncontrado.tipoLogin,
+          id: adminEncontrado.id
+        },
+        SEGREDO,
+        { expiresIn: 6000 }
+      )
+
+      return response.status(200).send({ token })
+    }
+
+    return response.status(401).send('Senha incorreta.')
+  }
+
+  return response.status(404).send('Administrador não encontrado.')
+}
+
 module.exports = {
   addUsuario,
   addAdmin,
   addVigilante,
-  getProprietarios,
+  getMoradores,
   getVigilantes,
   getAdmins,
   getMoradorById,
-  getVigilanteById
+  getVigilanteById,
+  deleteMorador,
+  deleteVigilante,
+  deleteAdmin,
+  login
 
 }

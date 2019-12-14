@@ -46,9 +46,8 @@ const ProprietariosSchema = new Schema({
     telefone: {
         type: Number
     },
-    token: {
-        type: String,
-        required: true
+    tipo: {
+        type: String
     }
 });
 
