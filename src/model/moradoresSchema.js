@@ -1,33 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Visitantes = new Schema({
+const visitante = require('../model/visitantesSchema')
+const ProprietariosSchema = new Schema({
     _id: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        unique: true
-    },
-    nomeVisitante: {
-        type: String,
-        required: true
-    },
-    rg: {
-        type: Number,
-        required: true
-    },
-    dataEntrada: {
-        type: Date,
-        required: true,
-        default: Date.now
-    },
-    saidaMorador: {
-        type: Date,
-        default: null,
-    }
-
-})
-const MoradoresSchema = new Schema({
-    _id: {
-        type: mongoose.Schema.Types.ObjectId,
+        auto: true,
         required: true,
         unique: true
     },
@@ -55,7 +32,7 @@ const MoradoresSchema = new Schema({
         type: Boolean,
         required: true
     },
-    email:{
+    login: {
         type: String,
         required: true
     },
@@ -63,10 +40,23 @@ const MoradoresSchema = new Schema({
         type: String,
         required: true
     },
-    visitas: [Visitantes]
+    moradores:{
+        type: String  
+    },
+    telefone: {
+        type: Number
+    },
+    token: {
+        type: String,
+        required: true
+    }
+});
 
+ProprietariosSchema.add({
+    visita : [visitante]
 })
 
-const moradoresModel = mongoose.model('moradores', MoradoresSchema)
 
-module.exports = moradoresModel
+const moradoresModel = mongoose.model('moradores', ProprietariosSchema)
+
+module.exports = {moradoresModel, ProprietariosSchema}
