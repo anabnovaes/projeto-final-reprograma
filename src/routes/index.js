@@ -1,10 +1,10 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-router.get("/", (request, response) => {
+router.get('/', (request, response) => {
   response.status(200).send({
-    title: "Sistema de gestão de moradores do condomínio dos Sonhos",
-    version: "1.0.0"
+    title: 'Sistema de gestão de moradores do condomínio dos Sonhos',
+    version: '1.0.0'
   })
 });
 

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const VisitanteSchema = new Schema({
+
     _id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
@@ -26,5 +27,8 @@ const VisitanteSchema = new Schema({
 
 })
 
+const visitantesModel = mongoose.model('visitantes', VisitanteSchema);
 
-module.exports = {VisitanteSchema}
+
+
+module.exports = {VisitanteSchema, visitantesModel}

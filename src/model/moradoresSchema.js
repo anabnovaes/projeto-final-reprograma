@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const visitante = require('../model/visitantesSchema')
+const {VisitanteSchema} = require('./visitantesSchema')
+
 const ProprietariosSchema = new Schema({
     _id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -40,22 +41,21 @@ const ProprietariosSchema = new Schema({
         type: String,
         required: true
     },
-    moradores:{
-        type: String  
+    moradores: {
+        type: String
     },
     telefone: {
         type: Number
     },
     tipo: {
         type: String
-    }
+    },
+    visitas: [VisitanteSchema]
+
 });
 
-ProprietariosSchema.add({
-    visita : [visitante]
-})
 
 
 const moradoresModel = mongoose.model('moradores', ProprietariosSchema)
 
-module.exports = {moradoresModel, ProprietariosSchema}
+module.exports = { moradoresModel, ProprietariosSchema }
