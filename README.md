@@ -8,9 +8,9 @@ Projeto final de API realizado na 14ª semana do bootcamp de backend da reprogra
 Criar uma API de gestão de moradores e visitantes de um condomínio residencial.
 
 O sistema possui três tipos de acesso: 
-- *moradores* - alteram seus dados cadastrais e consultam suas visitas
-- *vigilantes* - alteram seus dados cadastrais, incluem e alteram visitantes.
-- *admins* - Incluem, alteram e removem moradores e vigilantes.
+- ***moradores** - alteram seus dados cadastrais e consultam suas visitas
+- **vigilantes** - alteram seus dados cadastrais, incluem e alteram visitantes.
+- **admins** - Incluem, alteram e removem moradores e vigilantes.
 
 
 ## Tecnologias usadas
@@ -27,16 +27,14 @@ Para desenvolver o projeto utilizei a tecnologia Node JS. O download do Node é 
 
 Para a execução da aplicação foram utilizadas as seguintes bibliotecas
 
-```sh
-express
+*express
 mongoose
 jsonwebtoken
 body-parser
 dotenv-safe
 bcryptjs
+* 
 
-
-```
 
 ## Instalação
  
