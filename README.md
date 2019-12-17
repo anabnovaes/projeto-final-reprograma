@@ -66,25 +66,36 @@ Os endpoints criados foram os seguintes:
 
 POST /admin/login => realiza o login de um administrador, retornando apenas o token de acesso
 
+
 POST /admin/ => Adiciona um novo admin
+
 
 GET /admin/ => Lista todos os admins cadastrados
 
+
 DELETE /admin/:id => Remove o admin do ID informado
+
 
 POST /admin/vigilantes => Adiciona um novo vigilante
 
+
 GET /admin/vigilantes => Lista todos os vigilantes cadastrados
+
 
 GET /admin/vigilantes/:vigilanteID => Lista os dados do vigilante de acordo com o ID 
 
+
 DELETE /vigilante/:id => Remove o vigilante do ID informado
+
 
 POST admin/proprietarios/ => Adiciona um novo morador
 
+
 GET /admin/proprietarios => Lista todos os moradores cadastrados
 
+
 GET /admin/proprietarios/:proprietarioID => Lista os dados do morador de acordo com o ID 
+
 
 DELETE /proprietarios/:IdProprietario => Remove o morador do ID informado
 
@@ -95,8 +106,25 @@ DELETE /proprietarios/:IdProprietario => Remove o morador do ID informado
 
 POST /vigilantes/login => realiza o login de um vigilante
 
+
 PATCH /vigilantes/:vigilanteId => Altera os dados de acesso de um vigilante
+
 
 POST /vigilantes/:moradorId/visitantes => Inclui uma nova visita para o morador do ID informado
 
+
 PATCH /vigilantes/:moradorId/visitantes/:visitanteId => Altera os dados cadastrais de uma visita pelo ID do morador e do visitante
+
+### Endpoints para moradores
+
+POST /moradores/login => realiza o login de um morador
+
+
+GET /moradores/IdMorador => Exibe os dados de cadastro de um morador pelo ID
+
+
+PATCH /moradores/:moradorId => Altera os dados de acesso de um morador
+
+
+GET /moradores/:moradorId/visitas => Exibe um array de visitas realizadas para este morador
+
