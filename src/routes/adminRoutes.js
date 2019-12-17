@@ -37,7 +37,7 @@ const autenticar = (request, response, next) => {
 
 // rotas para administrador 
 router.post('/', autenticar, controller.addAdmin)
-router.get('/', autenticar, controller.getVigilantes)
+router.get('/', autenticar, controller.getAdmins)
 router.delete('/:id', autenticar, controller.deleteAdmin)
 router.post('/login', controller.login)
 
