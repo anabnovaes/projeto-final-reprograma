@@ -28,10 +28,15 @@ Para desenvolver o projeto utilizei a tecnologia Node JS. O download do Node é 
 Para a execução da aplicação foram utilizadas as seguintes bibliotecas
 
 *express*
+
 *mongoose*
+
 *jsonwebtoken*
+
 *body-parser*
+
 *dotenv-safe*
+
 *bcryptjs*
 
 
